@@ -20,7 +20,7 @@ public class ZebpayUnblocker implements IXposedHookLoadPackage {
     public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
         if (!lpparam.packageName.equals("zebpay.Application"))
             return;
-        findAndHookMethod("zebpay.Application.SplashActivity", lpparam.classLoader, "b", new XC_MethodHook() {
+        findAndHookMethod("zebpay.Application.activity.SplashActivity", lpparam.classLoader, "b", new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 boolean theReturnVal = (boolean) param.getResult();
