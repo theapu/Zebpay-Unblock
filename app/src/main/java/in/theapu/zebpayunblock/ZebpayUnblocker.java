@@ -20,18 +20,15 @@ public class ZebpayUnblocker implements IXposedHookLoadPackage {
     public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
         if (!lpparam.packageName.equals("zebpay.Application"))
             return;
-        findAndHookMethod("zebpay.Application.activity.SplashActivity", lpparam.classLoader, "b", new XC_MethodHook() {
+        findAndHookMethod("zebpay.Application.activity.SplashActivity", lpparam.classLoader, "b", new XC_MethodReplacement() {
             @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                boolean theReturnVal = (boolean) param.getResult();
-                if (theReturnVal) {
-                    String warning = "App has been hooked by third party app, but ignored by Zebpay Unblock.";
-                    Context context = AndroidAppHelper.currentApplication();
-                    Toast toast = Toast.makeText(context, warning, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
-                }
-                param.setResult(false);
+            protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
+                String warning = "App has been hooked by third party app, but ignored by Zebpay Unblock. HODL!";
+                Context context = AndroidAppHelper.currentApplication();
+                Toast toast = Toast.makeText(context, warning, Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                return true;
             }
         });
     }
